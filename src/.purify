@@ -1,0 +1,21 @@
+# suppress umr X*
+#
+suppress umr dragged; ExtendEnd; _XtTranslateEvent
+suppress umr ExtendEnd; _XtTranslateEvent
+suppress umr CalcEdgeValues; PlaceChildren
+suppress umr ExtendSelection; _XtTranslateEvent
+suppress umr QueryGeometry; Xt*
+suppress umr XmQueryGeometry; Xt*
+suppress umr UpdatePointerData; _Xm*
+suppress umr CheckDisjointSelection; SelfInsert; _Xt*
+suppress umr XDrawString
+suppress umr DecideToDispatch
+suppress umr atoi; decodeQField
+suppress umr HandleChangeManaged; ChangeManaged
+suppress umr CBItemSave; _XtCallCallbacks
+suppress umr GetValuesHook; _XmExtGetValuesHook
+suppress umr BrowseScroll; DoOtherSources; XtAppNextEvent
+suppress umr CheckDisjointSelection
+suppress umr Replace; DeleteOrKill
+#
+suppress mlk XtMalloc; _XmGetArrowDrawRects; _XmCreateArrowPixmaps; Initialize

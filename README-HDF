@@ -1,0 +1,49 @@
+This release of NCSA Mosaic includes native support for browsing
+data files in NCSA HDF format.  For more information on HDF, see
+ftp.ncsa.uiuc.edu in /HDF or URL:
+        
+  http://www.ncsa.uiuc.edu/SDG/Software/HDF/HDFIntro.html
+
+If you compile Mosaic from source, link to HDF 3.3r1 (or the most
+recently announced HDF 3.3 revision at the time you compile) from
+ftp.ncsa.uiuc.edu in /HDF.  Note that HDF 3.3 supports UCAR's netCDF
+data format transparently.
+
+There are some new X resources for Mosaic 2.0 that customize the HDF
+browsing capabilities:
+
+hdfMaxImageDimension
+  Maximum size for an inlined HDF image.  If an image dimension
+  is larger than this, the image will be scaled down for display
+  and that fact (and the original dimensions) will be noted in the
+  text description next to the inlined image.  Default 400.
+hdfMaxDisplayedDatasets
+  Maximum number of datasets that will be displayed on a toplevel
+  page (additional datasets will be placed on another page).
+  Default 15.
+hdfMaxDisplayedAttributes
+  Maximum number of attributes that will be displayed on a toplevel
+  page (additional attributes will be placed on another page).
+  Default 10.
+hdfPowerUser
+  If true, less verbose text will be generated.  Default false.
+
+For more information on the HDF browsing support in general, see:
+
+  http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/hdf-browsing.html
+
+Some example HDF files suitable for browsing are referenced
+near the end of the Mosaic demo document.
+
+To talk to human beings about the HDF browsing support...
+
+  The HDF side of things:
+    Chris Houck
+    chouck@ncsa.uiuc.edu
+
+  The Mosaic side of things:
+    Marc Andreessen
+    marca@ncsa.uiuc.edu
+
+Please let us know if you are using this HDF support, and also please
+let us know of any problems or comments you might have.

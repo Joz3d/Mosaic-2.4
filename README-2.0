@@ -1,0 +1,309 @@
+The online version of this document is:
+http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/help-on-version-2.0.html
+
+Introduction to NCSA Mosaic for X 2.0
+*************************************
+
+This document is intended to serve as an introduction to NCSA Mosaic for
+the X Window System version 2.0. It covers new features in version 2.0, and
+changes from version 1.2, that will affect most users of Mosaic. 
+
+For more information on any of the details in this document, please feel free
+to send mail to mosaic-x@ncsa.uiuc.edu (or, alternately, to the World
+Wide Web mailing list www-talk@info.cern.ch or the Usenet newsgroup 
+comp.infosystems.www). 
+
+Status Of Documentation For 2.0
+===============================
+
+We are currently writing real Mosaic 2.0 documentation; it isn't yet
+available, for which we apologize. In the meantime, this document should at
+least help current users of Mosaic 1.2 upgrade to 2.0 without too much pain. 
+
+Potential Problems
+==================
+
+This section is an up-front listing of how Mosaic 2.0 is different than
+Mosaic 1.2 in ways that may cause apparent trouble to existing 1.2 users. 
+
+ o The Mosaic executable has been renamed Mosaic, and the new class
+   name for Mosaic is, predictably, Mosaic. Existing Mosaic 1.2 X
+   resources and application defaults files should be modified to match. 
+
+ o The method by which you customize the viewers Mosaic uses for
+   various datatypes (e.g. MPEG movies or PostScript documents) has 
+   completely changed. 
+
+   First, the multimedia X resources (e.g. gifViewerCommand) used
+   by Mosaic 1.2 are totally ignored by Mosaic 2.0. (Trust me, this is
+   really a good thing.) 
+
+   Second, you now have complete control over the types of data
+   Mosaic can understand and what it does with each type, as well as the
+   file extensions that correspond to each type (when communicating
+   with a HTTP0 or FTP server). 
+
+   Third, Mosaic now uses the MIME typing mechanism for naming
+   data types (e.g., the MIME type for a GIF image is image/gif).
+   This provides a substantial amount of interoperability with the
+   present and future of multimedia email on the Internet, but will
+   require a little readjustment on the part of users who are used to
+   simply calling GIF files "type GIF", etc. 
+
+   For more information on these issues, see: 
+
+    o Information on mapping MIME types to external viewers. 
+    o Information on mapping file extensions to MIME types. 
+
+ o Mosaic 2.0 speaks the HTTP/1.0 protocol, while Mosaic 1.2 spoke
+   the pre-HTTP/1.0 protocol commonly referred to as "HTTP0" or
+   "HTTP/0.9". 
+
+   This means that Mosaic 2.0 sends more complex queries to HTTP
+   servers than Mosaic 1.2 did. If you are running a fairly recent HTTP0
+   server (e.g. NCSA httpd 0.5), this should not be a problem -- the new
+   protocol is backward compatible, and Mosaic will go to great lengths
+   to make sure it interacts with the HTTP0 server correctly. 
+
+   However, some old HTTP servers (anything pre-1993) will break
+   completely when sent a HTTP/1.0 query, and Mosaic 2.0 won't be
+   able to make things work. Such servers are actually in violation of
+   the final HTTP0 protocol specification and should at least be
+   upgraded to conform to that specification, if not HTTP/1.0. 
+
+ o HTTP/1.0 servers are by now (November 1993) fairly widespread,
+   and many sites are using them without even realizing that they are
+   HTTP/1.0 servers, because they also talk HTTP0 to clients (like
+   Mosaic 1.2) that only talk HTTP0. 
+
+   It is important to realize that HTTP/1.0 mandates server-side typing
+   of files. This means that the server must recognize, for example, that
+   the file extension ".gif" means that the file is a GIF image (i.e.,
+   MIME type image/gif), and must communicate this information
+   to the client within the HTTP/1.0 retrieval process. HTTP/1.0 clients
+   like Mosaic 2.0 will not look at file extensions to determine file types
+   when talking to HTTP/1.0 servers -- if the server gets the type
+   wrong, the client will not look at the suffix to try to figure out the
+   right type. 
+
+   This means that if all of a sudden a file that Mosaic 1.2 always
+   handled as an HTML document is handled by Mosaic 2.0 as if it is a
+   binary data file, and the file is being served off an HTTP/1.0 server,
+   the server is (almost surely) at fault for not informing the client of
+   the correct type. 
+
+   Related issue: Transparent uncompression is currently never done
+   when talking to a HTTP/1.0 server. This will be fixed in a
+   maintenance release. We do however discourage reliance on
+   transparent uncompression in general, as clients on other platforms
+   (e.g. NCSA Mosaic for the Mac & Windows) generally can't
+   uncompress files compressed using the standard Unix methods (
+   compress and gzip). 
+
+   (Note to the skeptical: server-side typing is actually a powerful
+   feature of HTTP/1.0, despite any migration problems it may cause.
+   Also note that Mosaic 2.0 will still do file extension typing when
+   talking to HTTP0 servers, so you can always continue to run a
+   HTTP0 server in conjunction with Mosaic 2.0 if you prefer
+   client-side typing.) 
+
+ o Mosaic 2.0 does not have the hardcoded Documents and Manuals
+   menus that were in Mosaic 1.2. They were removed for a number of
+   reasons too boring to go into here. If, however, you find yourself
+   "lost in cyberspace" because of the loss of those hardcoded menus,
+   choose the "Internet Starting Points" entry in Mosaic 2.0's 
+   Navigate menu -- Mosaic will fetch a document from NCSA that
+   contains the contents of Mosaic 1.2's hardcoded menus in HTML
+   form. 
+
+   Also see the new "Internet Resources Meta-Index", also under
+   Mosaic 2.0's Navigate menu, for an alternate set of Internet
+   starting points perhaps more suitable to the task of locating any
+   specific piece of information on the network. 
+
+New Features In Mosaic 2.0
+==========================
+
+OK, this is the fun part. What will Mosaic 2.0 do for you? 
+
+ o Completely interruptible I/O. At any point in a data transfer process
+   (hostname lookups and certain stages of direct WAIS queries
+   excepted), you can click on the icon in the upper right corner of the
+   window to stop the current network action. 
+
+ o Fill-out forms. As per the current HTML+ spec, documents can
+   specify interactive fill-out forms -- with input elements including
+   text entry areas, toggle buttons, selection lists, popup menus, etc. --
+   and Mosaic will instantiate such fill-out forms as sets of Motif
+   widgets embedded inside the documents. 
+
+   This provides a way to provide arbitrarily sophisticated front-end
+   interfaces to databases and search engines, as well as other network
+   services -- e.g., ordering pizzas. 
+
+   See details on fill-out forms. 
+
+ o Authentication. Thanks to Ari Luotonen at CERN, Mosaic can now
+   communicate properly with HTTP/1.0 servers that demand user
+   authentication before accessing information -- the user is presented
+   with an opportunity to enter a username and password to authenticate
+   herself to the remote server. 
+
+   Currently, the "BASIC" authentication scheme is supported, which
+   provides for encoded (not cleartext, but not encrypted) transmission
+   of password data across the network. This provides a level of security
+   at least as secure as, e.g., telnet. 
+
+   Once a user is authenticated on a particular server, Mosaic is smart
+   about caching and reusing the authentication information in
+   subsequent transactions with the same server in the same session --
+   the user will be informed at any time the cached authentication fails
+   and will be provided with the opportunity to enter a new username
+   and password again. 
+
+   See the CERN authentication overview for more information. 
+
+ o Direct WAIS access. Mosaic can now talk directly to WAIS servers
+   without needing to go through an intermediate gateway. This also
+   means: 
+
+    o Mosaic can cleanly retrieve and properly handle binary data
+      (images, audio, video, etc.) as well as HTML documents from
+      WAIS servers. Mosaic 2.0's normal customization
+      mechanisms can be used to customize what happens when
+      various types of binary data are accessed from WAIS servers. 
+    o Mosaic natively supports freeWAIS's ability to tie together
+      multiple data files with different formats under a single
+      umbrella (e.g. as a result of a query across text, the user may
+      be presented with her choice of text, image, or audio). 
+
+   Examples of direct WAIS access: 
+
+    o Direct access to CNIDR WAIS directory of servers. 
+    o Direct access to InterNIC RFC WAIS server. 
+    o A search on the term "MIME" in the InterNIC RFC WAIS
+      server. 
+    o RFC 1437 from the InterNIC RFC WAIS server. 
+
+ o Full format/viewer/extension customizability, including the ability
+   to allow local shell scripts to be launched from hyperlinks. 
+
+   For more information, see: 
+
+    o Information on mapping MIME types to external viewers. 
+    o Information on mapping file extensions to MIME types. 
+    o Information on allowing shell scripts to be executed via
+      hyperlinks. 
+
+ o Native viewing of HDF and netCDF scientific data files. Here are
+   some examples: 
+
+    o An HDF file of a galactic jet. 
+    o A complex HDF file containing lots of different data
+      elements, including hyperlinks within annotations. 
+    o A netCDF file. 
+    o An image of NCSA Director Larry Smarr. 
+    o A huge (5+ megabytes) HDF file of satellite weather image
+      and associated metadata. 
+
+   Note: since it is possible for Mosaic 2.0 to be compiled without
+   native HDF/netCDF viewing support, your particular copy may not
+   be able to view the above examples. 
+
+ o URL redirection. This means that a server can return, instead of a
+   document, a pointer to a document anywhere on the Internet. When
+   this happens, Mosaic will transparently attempt to fetch the new
+   document. 
+
+   Among other things, this enables clean graphical distributed
+   information space mapping -- a single image map can have hotspots
+   corresponding to information resources scattered throughout various
+   information servers across the Internet, and the user can jump to any
+   of those resources with a single mouse click. 
+
+   For an example of URL redirection in conjunction with image
+   mapping, see the experimental Internet Resources Metamap. 
+
+ o Inlined image caching, including customizability of the amount of
+   memory Mosaic will use to cache inlined images (default is 2048
+   kilobytes). 
+
+   Use the command line flag -ics or the X resource 
+   imageCacheSize to set the size of the image cache in kilobytes. 
+
+ o Delayed image loading, for users with slow network connections.
+   Use the -dil command line option or set the delayImageLoads
+   X resource to True to enable delayed image loading by default; it can
+   be controlled on a per-window basis from Mosaic's Options
+   menu. 
+
+ o HTTP/1.0 support. In addition to enabling things like fill-out forms
+   support, redirection, and authentication, this means that Mosaic can
+   talk with the new breed of sophisticated HTTP/1.0 servers being
+   deployed on the network to the fullest extent of their -- and
+   Mosaic's -- ability. 
+
+   See also the CERN HTTP/1.0 spec. 
+
+ o Better hypermedia document display capabilities: 
+
+    o Documents can be arbitrarily long now. 
+    o Normal document text is formatted to the width of the visible
+      window, not the width of the widest element (e.g. sections of
+      preformatted text) in the document. 
+    o Support for <BR> (line break) and <HR> (horizontal rule)
+      tags. 
+    o Sophisticated support for inlining Motif widgets into
+      documents, which enables the fill-out forms support
+      described above. 
+    o Performance speedups. 
+
+ o URL canonicalization -- a fancy way of saying that Mosaic strips
+   redundant or useless information (like capital letters in hostnames,
+   ":80" in HTTP queries and ":70" in Gopher queries, and trailing dots
+   in hostnames) out of all URLs it accesses. This makes the global
+   history tracking much more consistent by improving the odds that
+   two slightly different URLs that point to the same document are
+   recognized as identical by Mosaic. 
+
+ o Improved system resource management -- many memory and socket
+   leaks were fixed. Due to these fixes and the inlined image caching
+   mentioned above, Mosaic should not be terribly hard on your system
+   even if you use it for a long time now. 
+
+ o Better PostScript output, including output of color inlined images. 
+
+ o Cute little icons in Gopher and FTP interfaces. 
+
+ o Enhanced remote control features, including ability to scroll through
+   documents from shell scripts and cleanly fire off external viewers
+   (e.g. images and audio). 
+
+ o Mouse tracking -- see the URL for the hyperlink under the pointer. 
+
+ o Menu item File->Refresh Current provides a convenient
+   way to restore proper inlined image colors in a given window if the
+   colors have been previously stolen for another window's inlined
+   images -- keyboard accelerator (with pointer inside the scrolled
+   document viewing window) is Capital-R. 
+
+ o Configurable Documents menu, for local site configuration. 
+
+ o Full compile-time customizability of home page, docs directory, and
+   all other hardcoded URLs for sites without direct Internet access. 
+
+ o Lots and lots of bug fixes and minor functionality and performance
+   improvements. 
+
+More Information
+================
+
+You may wish to look over an exhaustive list of technical changes that took
+place during the development of Mosaic version 2.0. 
+
+To take full advantage of Mosaic 2.0's capabilities, you should run a very
+smart HTTP/1.0 server. We recommend NCSA httpd. If you prefer a
+Perl-based server, try Plexus. Other options are CERN httpd and GN. 
+
+
+mosaic-x@ncsa.uiuc.edu
