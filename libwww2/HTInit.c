@@ -474,7 +474,10 @@ PUBLIC void HTFileInit NOARGS
 
 #define MAX_STRING_LEN 256
 
-static int getline(char *s, int n, FILE *f) 
+/* 2023 Joz: Commenting out this getline function as it was standardized in
+ * POSIX.1-2008 (via/thanks Pedro Vicente)
+
+static int getline(char *s, int n, FILE *f)
 {
   register int i=0;
   
@@ -493,8 +496,8 @@ static int getline(char *s, int n, FILE *f)
       ++i;
     }
 
-  /* NOTREACHED */
-}
+  /* NOTREACHED
+} */
 
 static void getword(char *word, char *line, char stop, char stop2) 
 {

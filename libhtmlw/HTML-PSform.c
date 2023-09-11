@@ -41,7 +41,9 @@
  *		permission of John Bradley.
  */
 
-#include <varargs.h>
+/* 2023 Joz: This library includes the pre-standard C header (via/thanks Pedro Vicente): */
+/* #include <varargs.h> */
+#include <stdarg.h>
 
 #include <string.h>
 #include <stdio.h>
@@ -170,8 +172,15 @@ static float GetDpi ARG1(HTMLWidget, hw) {
    of va_start() in HTML-PSformat.c. Until the SunPro folks can take a
    look at the problem, the following pre-ANSI code should workaround
    the problem." */
-static int PSprintf ARG1V(char *,format, ...) {
-        va_dcl
+
+/* 2023 Joz: Update this function (via/thanks Pedro Vicente): */
+/* static int PSprintf ARG1V(char *,format, ...) {	(original) */
+static int PSprintf (char *format, ...) {
+		/* 2023 Joz: I get compile errors regarding this 'va_dcl'... I can't
+		 * find any references to it anywhere else in any of the source, and
+		 * also noticed it's removed from future versions of this module, so
+		 * commenting it out in both versions of the PSprintf function */
+        /* va_dcl */
         va_list args;
         int     len;
         char    *s;
@@ -184,7 +193,9 @@ static int PSprintf ARG1V(char *,format, ...) {
                 }
                 PS_string = s;
         }
-        va_start(args);
+		/* 2023 Joz: Need to add format argument to va_start() now */
+        /* va_start(args); (original) */
+		va_start(args, format);
         len = vsprintf(PS_string+PS_len, format, args);
         /* this is a hack to make it work on systems were vsprintf(s,.)
          * returns s, instead of the len.
@@ -196,9 +207,11 @@ static int PSprintf ARG1V(char *,format, ...) {
 }
 #else /* not BROKEN_SOLARIS_COMPILER_STDARG */
 static int 
-PSprintf (format, va_alist)
-char* format;
-va_dcl
+/* 2023 Joz: Update this function (via/thanks Pedro Vicente):
+/* PSprintf (format, va_alist) (original) */
+PSprintf (char *format, ...)
+/* char* format; */
+/* va_dcl */
 {
 	int 	len;
 	char 	*s;
@@ -212,7 +225,9 @@ va_dcl
 		}
 		PS_string = s;
 	}
-	va_start(args);
+	/* 2023 Joz: Need to add format argument to va_start() now
+     * va_start(args); (original) */
+	va_start(args, format);
 	len = vsprintf(PS_string+PS_len, format, args);
 	/* this is a hack to make it work on systems were vsprintf(s,...)
 	 * returns s, instead of the len.

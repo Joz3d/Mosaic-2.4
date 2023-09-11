@@ -65,7 +65,10 @@ PRIVATE char *hostname=0;		/* The name of this host */
 extern int errno;
 #endif /* errno */
 
-extern char *sys_errlist[];		/* see man perror on cernvax */
+/* 2023 Joz: Recent Linux needs const on this declaration:
+ * (via/thanks Pedro Vicente):
+/* extern char *sys_errlist[];	(original)	/* see man perror on cernvax */
+extern const char *const sys_errlist[];		/* see man perror on cernvax */
 extern int sys_nerr;
 
 /*	Report Internet Error

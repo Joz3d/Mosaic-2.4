@@ -40,7 +40,7 @@ knrflag =
 sysconfigflags = -DMOTIF1_2
 
 #### System libraries.
-syslibs = -lsocket -lmisc
+# syslibs = -lsocket -lmisc	# 2023 Joz: (commented out for Linux)
 #### For AIX 3.2
 # syslibs = -lPW -lbsd
 #### For most other Motif platforms:
@@ -73,7 +73,8 @@ xinc = -I/usr/X11/include
 # xinc = -I/usr/X11/include
 
 #### X library locations.
-xlibs = -L/usr/X11/lib -lXm -lXmu -lXt -lX11 -lXbsd -lmbstub
+# xlibs = -L/usr/X11/lib -lXm -lXmu -lXt -lX11 -lXbsd -lmbstub	(original)
+xlibs = -L/usr/X11R6/lib -lXext -lXpm -lXm -lXmu -lXt -lX11 -lICE -lSM		# 2023 Joz: 2023 Linux
 #### For Sun's (at least running stock X/Motif as installed on our machines):
 # xlibs = /usr/lib/libXm.a /usr/lib/libXmu.a /usr/lib/libXt.a /usr/lib/libXext.a /usr/lib/libX11.a -lm
 #### For HP-UX 8.00:
