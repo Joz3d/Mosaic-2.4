@@ -31,12 +31,23 @@ I could not find the source for a 2.0–2.4 version until I came across [Udo Mun
 
 And so here is NCSA Mosaic 2.4 for X – the last widely used version of Mosaic... if you want to *actually* see what the browsing experience looked like with Mosaic 😁
 
-I didn't do much to the source.  I mostly just followed [Pedro Vicente's 2.7 build fixes](https://github.com/pedro-vicente/NCSA_Mosaic) and added just a few extremely minor other tweaks.
+I didn't do much to the source.  I mostly followed [Pedro Vicente's 2.7 build fixes](https://github.com/pedro-vicente/NCSA_Mosaic) and added a few minor updates for newer glibc and the such.
 
 ## Building
+
+**Prerequisite packages:**
+```
+sudo apt install libxt-dev libmotif-dev libxmu-headers libxmu-dev libxpm-dev
+```
+**Mosaic:**
+
 `make` and the binary spits out in src/, just like back in '94.
 
-If all the text is fixed-width single-size, you probably need to `apt install gsfonts-other gsfonts-x11` and restart your X server.
+**Fix Fonts:**
+```
+apt install gsfonts-other gsfonts-x11
+```
+...and restart your X server.
 
 
 ## Sites that work
@@ -51,4 +62,4 @@ It's not updated for protocol (yet?), so most sites don't work due to lack of su
 
 #### Other Lost Mosaic Versions
 
-If anyone has source code for xmosaic 0.5–0.10, please let me know, as I would love to play with those very early versions. 
+If anyone has source code for xmosaic 0.5–0.10, please let me know.  I would love to see those very early versions.
