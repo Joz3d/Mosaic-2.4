@@ -2,7 +2,7 @@
 
 What Mosaic *actually* looked like.
 
-This is the final widely used version of Mosaic for X.
+This is the final widely used version of Mosaic for X.  The Andreessen/Bina version.
 
 **tl;dr**: Nobody used the Mosaic 2.7 that is going around.  Everybody used this one.  They don't look, feel, or act the same.
 
