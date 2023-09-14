@@ -65,11 +65,10 @@ PRIVATE char *hostname=0;		/* The name of this host */
 extern int errno;
 #endif /* errno */
 
-/* 2023 Joz: Recent Linux needs const on this declaration:
- * (via/thanks Pedro Vicente):
+/* 2023 Joz: glibc 2.32 (Aug 2020) drops support for deprecated sys_errlist,
+ * sys_nerr, so replacing with strerror()								 */
 /* extern char *sys_errlist[];	(original)	/* see man perror on cernvax */
-extern const char *const sys_errlist[];		/* see man perror on cernvax */
-extern int sys_nerr;
+/* extern int sys_nerr;			(original)								 */
 
 /*	Report Internet Error
 **	---------------------
@@ -82,8 +81,8 @@ PUBLIC int HTInetStatus(where)
 #endif
 {
     CTRACE(tfp, "TCP: Error %d in `errno' after call to %s() failed.\n\t%s\n",
-	    errno,  where,
-	    errno < sys_nerr ? sys_errlist[errno] : "Unknown error" );
+	    errno,  where, strerror (errno));
+/*	    errno < sys_nerr ? sys_errlist[errno] : "Unknown error" );	(orig) */
 
     return -1;
 }
